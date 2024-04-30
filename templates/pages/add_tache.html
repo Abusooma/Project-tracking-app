@@ -1,0 +1,19 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Créer une nouvelle tâche {% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <a href="{% url 'detail-model' model.id %}" class="btn btn-secondary">Go back</a>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h3>Créer une nouvelle tâche</h3>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-success">Créer</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

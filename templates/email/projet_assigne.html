@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nouveau projet assigné</title>
+</head>
+<body>
+<h2>Nouveau projet assigné</h2>
+<p>Bonjour {{ chef_de_projet.Chef_de_Projet_name }},</p>
+
+<p>Vous avez été assigné comme chef de projet pour le nouveau projet "{{ projet.nom }}".</p>
+
+<p>Voici quelques détails sur le projet :</p>
+<ul>
+    <li>Nom du projet : {{ projet.nom }}</li>
+    <li>Description : {{ projet.description }}</li>
+    <li>Date de début : {{ projet.Date_debut|date:"d F Y" }}</li>
+    <li>Date de fin : {{ projet.Date_fin|date:"d F Y" }}</li>
+</ul>
+
+<p>Merci et bonne journée!</p>
+</body>
+</html>

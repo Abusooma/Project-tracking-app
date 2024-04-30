@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitation au chef de projet</title>
+</head>
+<body>
+    <h1>Invitation au chef de projet</h1>
+    <p>Bonjour {{ user.username }},</p>
+    <p>Vous avez été invité en tant que chef de projet sur notre plateforme.</p>
+    <p>Voici vos informations de connexion :</p>
+    <ul>
+        <li><strong>Nom d'utilisateur :</strong> {{ user.email }}</li>
+        <li><strong>Mot de passe :</strong> {{ password }}</li>
+    </ul>
+    <p>Nous vous recommandons de changer votre mot de passe une fois connecté pour des raisons de sécurité.</p>
+</body>
+</html>

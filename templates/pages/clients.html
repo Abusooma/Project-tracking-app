@@ -1,0 +1,98 @@
+{% extends "layouts/base.html" %}
+{% load i18n static %}
+
+{% block title %} Home {% endblock title %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row mt-5">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-secondary text-white" role="alert">
+            {{ message }}
+        </div>
+        {% endfor%}
+        {% endif %}
+        <div class="col">
+            <div class="col d-flex justify-content-between align-items-center">
+                <h1 class="mb-4">Clients</h1>
+                <div>
+                    <a href="{% url 'create-pro' %}" class="btn btn-success text-white">Aller à la vue de création du projet</a>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="thead-light">
+                    <tr>
+                        <th class="text-center" scope="col"><i class="fa fa-user"></i></th>
+                        <th class="text-center" scope="col">Nom du Client</th>
+                        <th class="text-center" scope="col">Adresse</th>
+                        <th scope="col">Activité</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for client in clients %}
+                    <tr>
+                        <td class="text-center">{{ client.idClient }}</td>
+                        <td class="text-center">{{ client.Nom_Client }}</td>
+                        <td class="text-center">{{ client.Adresse }}</td>
+                        <td>{{ client.Domaine_dactivite.Domaine_dactivite }}</td>
+                        <td>
+                            <a href="{% url 'update-client' client.idClient %}" class="btn btn-primary btn-sm me-1">Modifier</a>
+                            <a href="{% url 'delete-client' client.idClient %}"
+                               class="btn btn-danger btn-sm">Supprimer</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {% if clients.has_other_pages %}
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center mt-4">
+                    {% if clients.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ clients.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link" aria-hidden="true">&laquo;</span>
+                    </li>
+                    {% endif %}
+
+                    {% for num in clients.paginator.page_range %}
+                    {% if clients.number == num %}
+                    <li class="page-item active" aria-current="page">
+                        <span class="page-link text-white">{{ num }}</span>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% if clients.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ clients.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link" aria-hidden="true">&raquo;</span>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

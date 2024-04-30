@@ -1,0 +1,14 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Créer un modèle de processus{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Créer un nouveau modèle de processus</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Créer</button>
+    </form>
+</div>
+{% endblock content %}

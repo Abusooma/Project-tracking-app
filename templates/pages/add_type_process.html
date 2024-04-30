@@ -1,0 +1,26 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Créer un type de processus {% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <a href="{% url 'create-pro' %}" class="btn btn-secondary">Annuler</a>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <h3 class="text-center">Créer un type de processus</h3>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="id_nom">Nom du processus</label>
+                            {{ form.nom }}
+                        </div>
+                        <button type="submit" class="btn btn-success mt-3">Créer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

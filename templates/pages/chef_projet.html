@@ -1,0 +1,48 @@
+{% extends 'layouts/base.html' %}
+{% load static i18n %}
+
+{% block title %} Création d'un chef de projet {% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <a href="{% url 'create-pro' %}" class="btn btn-secondary">Annuler</a>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            {% if messages %}
+            {% for message in messages %}
+            <div id="alertMessage" class="alert alert-secondary alert-dismissible fade show text-white" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                        style="background-color: rgba(255, 255, 255, 0.5);">
+                    <span aria-hidden="true"><i class="fas fa-times text-white"></i></span>
+                </button>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+
+            <div class="card">
+                <h3 class="text-center">Création d'un chef de projet</h3>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="id_Chef_de_Projet_name">Nom</label>
+                            {{ form.Chef_de_Projet_name }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_Chef_de_Projet_Prenom">Prénom</label>
+                            {{ form.Chef_de_Projet_Prenom }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_Chef_de_Projet_mail">Mail</label>
+                            {{ form.Chef_de_Projet_mail }}
+                        </div>
+                        <button type="submit" class="btn btn-success mt-3">Créer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

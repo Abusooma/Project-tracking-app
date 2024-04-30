@@ -1,0 +1,49 @@
+{% extends 'layouts/base.html' %}
+
+{% load static i18n %}
+
+{% block title %} Map {% endblock title %}
+
+{% block content %}
+<div class="col-md-12">
+     {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-secondary text-white" role="alert">
+           {{ message }}
+        </div>
+        {% endfor%}
+        {% endif %}
+    <div class="card">
+        <div class="card-header">
+            <strong>{{ projects.count }} Projets Actifs</strong>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% for project in projects %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card mx-2">
+                        <div class="card-body">
+                            <div class="h4 m-0 lead text-info">
+                                {{ project.nom }}
+                            </div>
+                            <p class="text-muted mb-0 text-right">{{ project.calculer_progres }}%</p>
+                            <span class="mt-2">Progress</span>
+                            <div class="progress progress-xs mb-3">
+                                <div class="progress-bar bg-info" role="progressbar" style="width: {{ project.calculer_progres }}%" aria-valuenow="{{ project.calculer_progres }}" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <small class="text-muted">{{ project.description }}</small>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Client: {{ project.nom_client }}</small>
+                            <a href="{% url 'detail-projet' project.id_projet %}" class="btn btn-sm btn-primary float-end">Voir Détails</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

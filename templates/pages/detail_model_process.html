@@ -1,0 +1,70 @@
+{% extends 'layouts/base.html' %}
+
+{% load static i18n %}
+
+
+{% block title %} Ajouter un projet {% endblock title %}
+
+
+{% block content %}
+<div class="container mt-5">
+    {% if messages %}
+    {% for message in messages %}
+    <div id="alertMessage" class="alert alert-secondary alert-dismissible fade show text-white" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                style="background-color: rgba(255, 255, 255, 0.5);">
+            <span aria-hidden="true"><i class="fas fa-times text-white"></i></span>
+        </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    <div class="row">
+        <div>
+            <a href="{% url 'detail-projet' project.id_projet %}" class="btn btn-secondary">Go Back</a>
+        </div>
+        <div class="col">
+            <h3>Tâches du modèle {{ model.nom }}</h3>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Date Achèvement</th>
+                    <th scope="col">Achevée</th>
+                    {% if is_chef_projet or request.user.is_superuser %}
+                    <th scope="col">Action</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for tache in model.tache_set.all %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ tache.description }}</td>
+                    <td>{{ tache.date_achevement|date:"d F Y" }}</td>
+                    <td>
+                        {% if tache.acheve %}
+                        <img src="{% static 'img/true.png' %}" alt="True"
+                             style="max-width: 15px; height: auto; margin-left:30px;">
+                        {% else %}
+                        <img src="{% static 'img/false.png' %}" alt="False"
+                             style="max-width: 15px; height: auto; margin-left:30px;">
+                        {% endif %}
+                    </td>
+                    {% if is_chef_projet or request.user.is_superuser%}
+                    <td>
+                        <a href="{% url 'modify-task' model.id tache.id %}" class="btn btn-secondary">Modifier</a>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% if is_chef_projet or request.user.is_superuser %}
+            <a href="{% url 'create-task' model.id %}" class="btn btn-success">Créer une nouvelle tâche</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
