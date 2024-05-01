@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 
 from .models import NewUser
 from django.shortcuts import render, redirect
@@ -103,6 +104,7 @@ class UserPasswordResetConfirmView(PasswordResetConfirmView):
 class UserPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     template_name = 'accounts/password_change.html'
     form_class = UserPasswordChangeForm
+    success_url = reverse_lazy('display')
 
     def form_valid(self, form):
         super().form_valid(form)
@@ -110,6 +112,4 @@ class UserPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
         self.request.user.save()
 
         messages.success(self.request, 'Mot de passe changé avec success')
-
-        return redirect('display')
 
