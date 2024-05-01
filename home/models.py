@@ -21,9 +21,6 @@ class Responsable_Projet(admin.ModelAdmin):
     search_fields = ['Chef_de_Projet_name', 'Chef_de_Projet_Prenom', ]
 
 
-##
-
-
 class Equipe_de_Projet(models.Model):
     Nom_Employe = models.CharField(max_length=200, null=True)
     Services = models.CharField(max_length=200)
@@ -229,6 +226,17 @@ class Tache(models.Model):
 
     def progression_tache(self):
         return 100 if self.acheve else 0
+
+
+class Commentaire(models.Model):
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    model = models.ForeignKey(ModelProcess, on_delete=models.CASCADE)
+    contenu = models.TextField()
+    response = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
+
+
+class CommentaireAdmin(admin.ModelAdmin):
+    list_display = ('creator', 'model',)
 
 
 class TacheAdmin(admin.ModelAdmin):

@@ -14,7 +14,6 @@ def generate_random_password():
 def add_permissions_to_group(group_name):
     # Vérifiez d'abord si le groupe existe
     group, _ = Group.objects.get_or_create(name=group_name)
-
     # Obtenez les autorisations pour le modèle 'Tache'
     content_type = ContentType.objects.get_for_model(Tache)
     permissions = Permission.objects.filter(content_type=content_type)

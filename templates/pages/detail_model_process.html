@@ -64,6 +64,57 @@
             {% if is_chef_projet or request.user.is_superuser %}
             <a href="{% url 'create-task' model.id %}" class="btn btn-success">Créer une nouvelle tâche</a>
             {% endif %}
+
+            <!-- Affichage des commentaires de l'utilisateur -->
+            <div class="card mt-5">
+                {% if commentaires %}
+                <div class="card-header">
+                    Vos commentaires
+                </div>
+                {% endif %}
+                <div class="card-body">
+                    {% for commentaire in commentaires %}
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <p class="card-text">{{ commentaire.contenu }}</p>
+                            <p class="card-text text-muted">@{{ commentaire.creator }}</p>
+                        </div>
+                    </div>
+                    {% empty %}
+                        {% if not is_chef_projet or not request.user.is_authenticated %}
+                            <p class="card-text">Vos commentaires apparaîtront ici une fois ajoutés.</p>
+                        {% else %}
+                            <p class="card-text">Vous n'avez aucun commentaire pour le moment</p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% if not is_chef_projet or not request.user.is_authenticated %}
+            <!-- Formulaire pour laisser un commentaire -->
+            <div class="card mt-3">
+                <div class="card-header">
+                    Laisser un commentaire
+                </div>
+                <div class="card-body">
+                    <form action="{% url 'ajouter_commentaire' model.id %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="model_id" value="{{ model.id }}">
+                        <div class="mb-3">
+                            <label for="commentaire" class="form-label">Votre commentaire :</label>
+                            <textarea class="form-control border px-2" name="contenu" id="commentaire" rows="5"
+                                      required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success">Publier</button>
+                    </form>
+                </div>
+            </div>
+
+            {% else %}
+            {% if commentaires %}
+            <a href="#" class="btn btn-success mt-2">Repondre</a>
+            {% endif %}
+            {% endif %}
+
         </div>
     </div>
 </div>

@@ -174,3 +174,9 @@ class ModelProcessForm(forms.ModelForm):
         widgets = {
             'nom': forms.TextInput(attrs={'class': 'form-control', 'style': 'border: 1px solid #ced4da;'})
         }
+
+
+class CommentaireForm(forms.ModelForm):
+    class Meta:
+        model = Commentaire
+        fields = ['contenu']

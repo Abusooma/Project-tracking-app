@@ -2,6 +2,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from .models import NewUser
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordChangeView, PasswordResetConfirmView
@@ -52,6 +54,9 @@ def loginView(request):
             password = form.cleaned_data.get('password')
             user = authenticate(username=email, password=password)
             if user is not None:
+                if not user.has_change_password:
+                    login(request, user)
+                    return redirect('password_change')
                 login(request, user)
                 return redirect('display')
             else:
@@ -68,6 +73,7 @@ def register(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.is_active = True
+            user.has_change_password = True
             user.save()
             return redirect('/accounts/login/')
         else:
@@ -94,6 +100,16 @@ class UserPasswordResetConfirmView(PasswordResetConfirmView):
     form_class = UserSetPasswordForm
 
 
-class UserPasswordChangeView(PasswordChangeView):
+class UserPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     template_name = 'accounts/password_change.html'
     form_class = UserPasswordChangeForm
+
+    def form_valid(self, form):
+        super().form_valid(form)
+        self.request.user.has_change_password = True
+        self.request.user.save()
+
+        messages.success(self.request, 'Mot de passe changé avec success')
+
+        return redirect('display')
+

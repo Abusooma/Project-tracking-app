@@ -208,8 +208,8 @@ def chefProjectView(request):
             chef_projet.user = user
             chef_projet.save()
             group_name = 'chef de projet'
-            group_chef_projet, _ = Group.objects.get_or_create(name=group_name)
-            group_chef_projet.user_set.add(user)
+            group, _ = Group.objects.get_or_create(name=group_name)
+            group.user_set.add(user)
 
             add_permissions_to_group(group_name=group_name)
 
@@ -261,22 +261,24 @@ def familyProjetView(request):
 
 
 # ----------Fin ::::: Vues de gestion de Type de processus d'un projet -------------------
-@login_required
+
 def detailModel(request, pk):
     is_chef_projet = request.user.groups.filter(name='chef de projet').exists()
-    print(is_chef_projet)
     modelProcess = get_object_or_404(ModelProcess, pk=pk)
+    commentaires = Commentaire.objects.filter(model=modelProcess)
+
     projet = modelProcess.projet
     context = {
         'model': modelProcess,
         'project': projet,
-        'is_chef_projet': is_chef_projet
+        'is_chef_projet': is_chef_projet,
+        'commentaires': commentaires
     }
     return render(request, 'pages/detail_model_process.html', context=context)
 
 
 @login_required
-@permission_required('tache.add_tache', raise_exception=True)
+@permission_required('home.add_tache', raise_exception=True)
 def create_task(request, model_id):
     model = get_object_or_404(ModelProcess, pk=model_id)
     projet = model.projet
@@ -295,7 +297,7 @@ def create_task(request, model_id):
 
 
 @login_required
-@permission_required('tache.change_tache', raise_exception=True)
+@permission_required('home.change_tache', raise_exception=True)
 def edit_task(request, model_id, task_id):
     task = get_object_or_404(Tache, pk=task_id)
     model = get_object_or_404(ModelProcess, pk=model_id)
@@ -308,3 +310,18 @@ def edit_task(request, model_id, task_id):
         form = TacheForm(instance=task)
 
     return render(request, 'pages/modifie_acheve.html', {'form': form, 'model': model})
+
+
+def ajouter_commentaire(request, model_id):
+    if request.method == 'POST':
+        form = CommentaireForm(request.POST)
+        if form.is_valid():
+            contenu = form.cleaned_data['contenu']
+            creator = request.user
+            model = ModelProcess.objects.get(pk=model_id)
+            Commentaire.objects.create(contenu=contenu, creator=creator, model=model)
+
+            return redirect('detail-model', pk=model_id)
+    else:
+        form = CommentaireForm()
+    return render(request, 'pages/detail_model_process.html', {'form': form})
