@@ -55,7 +55,7 @@ def loginView(request):
             password = form.cleaned_data.get('password')
             user = authenticate(username=email, password=password)
             if user is not None:
-                if not user.has_change_password:
+                if not user.has_change_password and hasattr(user, 'chef_de_projet'):
                     login(request, user)
                     return redirect('password_change')
                 login(request, user)
@@ -104,7 +104,6 @@ class UserPasswordResetConfirmView(PasswordResetConfirmView):
 class UserPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     template_name = 'accounts/password_change.html'
     form_class = UserPasswordChangeForm
-    success_url = reverse_lazy('display')
 
     def form_valid(self, form):
         super().form_valid(form)
@@ -112,4 +111,5 @@ class UserPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
         self.request.user.save()
 
         messages.success(self.request, 'Mot de passe changé avec success')
+        return redirect('display')
 

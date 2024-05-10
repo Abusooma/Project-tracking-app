@@ -1,102 +1,93 @@
-{% extends 'layouts/base.html' %}
-
-{% load static i18n %}
-
-{% block title %} Ajouter un projet {% endblock title %}
-
-{% block content %}
+{% extends 'layouts/base.html' %} {% load static i18n %} {% block title %}
+Ajouter un projet {% endblock title %} {% block content %}
 <div class="container mt-5">
-    {% if messages %}
-    {% for message in messages %}
-    <div class="alert alert-secondary text-white" role="alert">
-        {{ message }}
-    </div>
-    {% endfor %}
-    {% endif %}
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <h3 class="text-center">Modifier le projet : <span class="fs-20 fw-400 text-success"> <small> {{ projet.nom }}</small> </span></h3>
-                <div class="card-body">
-                    <form method="POST">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <label for="id_nom">Nom du projet</label>
-                            {{ form.nom }}
-                        </div>
-                        <div class="form-group">
-                            <label for="id_type_process">Type de processus</label>
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    {{ form.type_process }}
-                                </div>
-                                <div class="col-auto">
-                                    <a href="{% url 'type-process' %}" class="btn btn-success"><i
-                                            class="fas fa-plus-circle"></i> Ajouter</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="id_nom_client">Nom du client</label>
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    {{ form.nom_client }}
-                                </div>
-                                <div class="col-auto">
-                                    <a href="{% url 'add-client' %}" class="btn btn-success"><i
-                                            class="fas fa-plus-circle"></i> Ajouter</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="id_chef_de_projet">Chef de projet</label>
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    {{ form.chef_de_projet }}
-                                </div>
-                                <div class="col-auto">
-                                    <a href="{% url 'add-chef-projet' %}" class="btn btn-success"><i
-                                            class="fas fa-plus-circle"></i> Ajouter</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="id_famille_projet">Famille de projet</label>
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    {{ form.famille_projet }}
-                                </div>
-                                <div class="col-auto">
-                                    <a href="{% url 'family-projet' %}" class="btn btn-success"><i
-                                            class="fas fa-plus-circle"></i> Ajouter</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="id_Date_debut">Date de début</label>
-                            <input type="text" class="form-control" style="border: 1px solid #ced4da;"
-                                   id="datepicker-debut" name="Date_debut">
-                            {% for error in form.Date_debut.errors %}
-                            <div class="invalid-feedback">{{ error }}</div>
-                            {% endfor %}
-                        </div>
-                        <div class="form-group">
-                            <label for="id_Date_fin">Date de fin</label>
-                            <input type="text" class="form-control" style="border: 1px solid #ced4da;"
-                                   id="datepicker-fin" name="Date_fin">
-                            {% for error in form.Date_fin.errors %}
-                            <div class="invalid-feedback">{{ error }}</div>
-                            {% endfor %}
-                        </div>
-                        <div class="form-group">
-                            <label for="id_description">Description</label>
-                            {{ form.description }}
-                        </div>
-                        <button type="submit" class="btn btn-success mt-3">Modifier</button>
-                    </form>
-                </div>
+  {% if messages %} {% for message in messages %}
+  <div class="alert alert-secondary text-white" role="alert">{{ message }}</div>
+  {% endfor %} {% endif %}
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <h3 class="text-center">
+          Modifier le projet :
+          <span class="fs-20 fw-400 text-success">
+            <small> {{ projet.nom }}</small>
+          </span>
+        </h3>
+        <div class="card-body">
+          <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="id_nom">Nom du projet</label>
+              {{ form.nom }}
             </div>
+            <div class="form-group">
+              <label for="id_type_process">Type de processus</label>
+              <div class="row align-items-center">
+                <div class="col">{{ form.type_process }}</div>
+                <div class="col-auto">
+                  <a href="{% url 'type-process' %}" class="btn btn-success"
+                    ><i class="fas fa-plus-circle"></i> Ajouter</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="id_nom_client">Nom du client</label>
+              <div class="row align-items-center">
+                <div class="col">{{ form.nom_client }}</div>
+                <div class="col-auto">
+                  <a href="{% url 'add-client' %}" class="btn btn-success"
+                    ><i class="fas fa-plus-circle"></i> Ajouter</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="id_chef_de_projet">Chef de projet</label>
+              <div class="row align-items-center">
+                <div class="col">{{ form.chef_de_projet }}</div>
+                <div class="col-auto">
+                  <a href="{% url 'add-chef-projet' %}" class="btn btn-success"
+                    ><i class="fas fa-plus-circle"></i> Ajouter</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="id_Date_debut">Date de début</label>
+              <input
+                type="text"
+                class="form-control"
+                style="border: 1px solid #ced4da"
+                id="datepicker-debut"
+                name="Date_debut"
+              />
+              {% for error in form.Date_debut.errors %}
+              <div class="invalid-feedback">{{ error }}</div>
+              {% endfor %}
+            </div>
+            <div class="form-group">
+              <label for="id_Date_fin">Date de fin</label>
+              <input
+                type="text"
+                class="form-control"
+                style="border: 1px solid #ced4da"
+                id="datepicker-fin"
+                name="Date_fin"
+              />
+              {% for error in form.Date_fin.errors %}
+              <div class="invalid-feedback">{{ error }}</div>
+              {% endfor %}
+            </div>
+            <div class="form-group">
+              <label for="id_description">Description</label>
+              {{ form.description }}
+            </div>
+            <button type="submit" class="btn btn-success mt-3">Modifier</button>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 {% endblock content %}

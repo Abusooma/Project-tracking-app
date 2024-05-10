@@ -52,9 +52,12 @@
                              style="max-width: 15px; height: auto; margin-left:30px;">
                         {% endif %}
                     </td>
-                    {% if is_chef_projet or request.user.is_superuser%}
+                    {% if is_chef_projet or request.user.is_superuser %}
                     <td>
                         <a href="{% url 'modify-task' model.id tache.id %}" class="btn btn-secondary">Modifier</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'delete-task' model.id tache.id %}" class="btn btn-danger">Supprimer</a>
                     </td>
                     {% endif %}
                 </tr>
@@ -81,15 +84,15 @@
                         </div>
                     </div>
                     {% empty %}
-                        {% if not is_chef_projet or not request.user.is_authenticated %}
-                            <p class="card-text">Vos commentaires apparaîtront ici une fois ajoutés.</p>
-                        {% else %}
-                            <p class="card-text">Vous n'avez aucun commentaire pour le moment</p>
-                        {% endif %}
+                    {% if not is_chef_projet or request.user.is_superuser %}
+                    <p class="card-text">Vos commentaires apparaîtront ici une fois ajoutés.</p>
+                    {% else %}
+                    <p class="card-text">Vous n'avez aucun commentaire pour le moment</p>
+                    {% endif %}
                     {% endfor %}
                 </div>
             </div>
-            {% if not is_chef_projet or not request.user.is_authenticated %}
+            {% if not is_chef_projet or request.user.is_superuser %}
             <!-- Formulaire pour laisser un commentaire -->
             <div class="card mt-3">
                 <div class="card-header">
@@ -108,10 +111,25 @@
                     </form>
                 </div>
             </div>
-
             {% else %}
             {% if commentaires %}
-            <a href="#" class="btn btn-success mt-2">Repondre</a>
+             <div class="card mt-3">
+                <div class="card-header">
+                    Repondre
+                </div>
+                <div class="card-body">
+                    <form action="{% url 'ajouter_commentaire' model.id %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="model_id" value="{{ model.id }}">
+                        <div class="mb-3">
+                            <label for="commentaire" class="form-label">Votre commentaire :</label>
+                            <textarea class="form-control border px-2" name="contenu" id="comment" rows="5"
+                                      required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success">Publier</button>
+                    </form>
+                </div>
+            </div>
             {% endif %}
             {% endif %}
 

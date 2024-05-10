@@ -23,3 +23,60 @@ def add_permissions_to_group(group_name):
         if permission not in group.permissions.all():
             group.permissions.add(permission)
 
+
+
+# Remplir les models par defaut
+
+contenu_models = {
+    'A': [
+         "Revue logistique",
+          "Création l’arborescence du produit", 
+          "Traitement FT315", 
+          "Réalisation DFM XT763 ( Livrable)",  
+          "Initiation Tryptique (livrable)", 
+          "Simogramme", 
+          "Initiation analyse capacitaire XT443 (si besoin)", 
+          "Organiser les réunions Test /conception produit", 
+          "Critical Design Review"
+          ],
+    'B': [
+        "Revue AMDEC et PS", 
+        "Définir la liste des outillages", 
+        "Récupération des CAO et 3D mécanique",
+        "Elaboration les CDC => lancement outillage",
+        "Lancement les écrans FT295 + cadre (si besoin)",
+	    "Avoir un planning des outillages", 
+	    "Suivi Avancement", 
+	    "Création Dossier Proto : FT206",  
+	    "Organisation Revue Industrielle : FT799",  
+	    "Réalisation Proto",
+	    "Analyse critique assemblage FT211",
+        "Récupération les spécification produit (poids, exigences ..)",
+	    "Création une demande étiquette produit",
+	    "Valider protype emballage et etiquette", 
+	    "Mise à jour de la nomenclature", 
+	    "Passage B –Model Review"
+],
+'C': [
+    	"Création Dossier Proto",   
+	    "Réalisation Proto  ",
+	    "Liste des composants réparable : FT 653-(livrable)",
+        "Retour LUP",
+	    "Passage CMR",
+        "Rapport de qualification outillage : FT790"
+],
+'Ramp up': [
+    	"Finalisation simograme : XT446",   		
+	    "Vérification chiffrage MOD / Dossier de fab",		
+	    "Analyse capacitaire XT443-(livrable)",		
+	    "Réalisation audit Interne", 
+	    "Accompagner la production : ajustement et réglage process (si besoin)",   		
+	    "Suivi FPY : validation la montée en cadence",   		
+	    "MPR Validé"
+]
+
+
+}
+
+noms_models = list(contenu_models.keys())
+

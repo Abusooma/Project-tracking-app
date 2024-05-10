@@ -2,6 +2,10 @@
 """
 Copyright (c) 2019 - present AppSeed.us
 """
+
+"""
+Ce fichier contient le model utilisateur personnalisé de django heritant de la classe AbstractBaseUser
+"""
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager

@@ -36,6 +36,7 @@ urlpatterns = [
 
     path('create-task/<int:model_id>/', views.create_task, name='create-task'),
     path('task/<int:model_id>/<int:task_id>/', views.edit_task, name='modify-task'),
+    path('delete/<int:model_id>/<int:task_id>/', views.delete_task, name='delete-task'),
 
     path('commentaire/<int:model_id>/', views.ajouter_commentaire, name='ajouter_commentaire'),
 ]

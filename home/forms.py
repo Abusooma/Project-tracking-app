@@ -1,8 +1,17 @@
 from django import forms
 from .models import *
 
+"""
+Dans ce fichier il y'a tous les formulaires personnalisés de tous les models de notre application
 
+Model client: formclient qui permet de recevoir les entrées des données de creation de chaque client
+Model Projet: FormProjet qui permet de recevoir les entrées de données de creation de chaque projet dans la base de données
+"""
 class ClientForm(forms.ModelForm):
+    """
+    formulaire personnalisé du model client 
+    """
+    # init pour personnaliser notre formulaire avant sa creation
     def __init__(self, *args, **kwargs):
         super(ClientForm, self).__init__(*args, **kwargs)
 
@@ -36,6 +45,7 @@ class CategorieForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        #Parcours les champs du formulaire pour les appliquer les styles css
         for field_name, field in self.fields.items():
             field.widget.attrs.update({'class': 'form-control px-2', 'style': 'border: 1px solid #ced4da;'})
 
@@ -43,8 +53,7 @@ class CategorieForm(forms.ModelForm):
 class ProjetForm(forms.ModelForm):
     class Meta:
         model = Projet
-        fields = ['nom', 'type_process', 'Date_debut', 'Date_fin', 'description', 'nom_client', 'chef_de_projet',
-                  'famille_projet']
+        fields = ['nom', 'type_process', 'Date_debut', 'Date_fin', 'description', 'nom_client', 'chef_de_projet']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -92,19 +101,6 @@ class ProjetForm(forms.ModelForm):
             widget=forms.Select(attrs={'class': 'form-control mb-1 mt-1 border px-1'})
         )
 
-        # Personnalisation du formulaire de famille de projet
-
-        self.familles = Famille_de_Projet.objects.all()
-        self.famille_choices = [('', '-- Choisir une Famille de projet --')]
-
-        for famille in self.familles:
-            self.famille_choices.append((famille.idFamille, famille.Nom_Famille))
-
-        self.fields['famille_projet'] = forms.ChoiceField(
-            choices=self.famille_choices,
-            widget=forms.Select(attrs={'class': 'form-control mb-1 mt-1 border px-1'})
-        )
-
     def clean_type_process(self):
         type_process_id = self.cleaned_data['type_process']
         return Process.objects.get(pk=type_process_id)
@@ -116,10 +112,6 @@ class ProjetForm(forms.ModelForm):
     def clean_chef_de_projet(self):
         chef_id = self.cleaned_data['chef_de_projet']
         return Chef_de_Projet.objects.get(idChef_de_Projet=chef_id)
-
-    def clean_famille_projet(self):
-        famille_id = self.cleaned_data['famille_projet']
-        return Famille_de_Projet.objects.get(idFamille=famille_id)
 
 
 class ChefProjetForm(forms.ModelForm):

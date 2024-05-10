@@ -171,7 +171,6 @@ class Projet(models.Model):
     chef_de_projet = models.ForeignKey(Chef_de_Projet, on_delete=models.CASCADE, null=True)
     Date_debut = models.DateTimeField(null=True)
     Date_fin = models.DateTimeField(null=True)
-    famille_projet = models.ForeignKey(Famille_de_Projet, on_delete=models.CASCADE, null=True)
     type_process = models.ForeignKey(Process, on_delete=models.CASCADE, null=True)
     id_projet = models.AutoField(primary_key=True)
 
@@ -244,7 +243,7 @@ class TacheAdmin(admin.ModelAdmin):
 
 
 class programme(admin.ModelAdmin):
-    list_display = ('nom', 'type_process', 'description', 'nom_client', 'chef_de_projet', 'famille_projet')
+    list_display = ('nom', 'type_process', 'description', 'nom_client', 'chef_de_projet',)
     search_fields = ['nom', 'etat', 'description']
     list_filter = ['nom']
 

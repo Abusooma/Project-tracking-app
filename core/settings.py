@@ -151,10 +151,10 @@ LOGIN_REDIRECT_URL = '/home/display-project/'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'soumahaboubacarsopra@gmail.com'
-EMAIL_HOST_PASSWORD = 'jppe llzx aopb iokv'
+EMAIL_HOST = 'smtp-mail.outlook.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'gestion.projet2024@outlook.com'
+EMAIL_HOST_PASSWORD = 'ACTIA,2024***'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
